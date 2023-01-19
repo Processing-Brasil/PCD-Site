@@ -1,96 +1,251 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
+  <meta char="UTF-8" />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Processing Community Day Brasil - 2021</title>
-
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@900&family=Recursive:wght@400;700&family=Tomorrow:wght@500&display=swap" rel="stylesheet"> 
-
-  <link rel="stylesheet" href="https://pcd2021.encontrosdigitais.com.br/css/normalize.css">
-  <link rel="stylesheet" href="https://pcd2021.encontrosdigitais.com.br/css/main.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
-  <!-- <script src="js/sketch.js"></script> -->
-
-  <!-- Social: Facebook / Open Graph -->
-  
-  <meta property="og:url" content="https://pcd.encontrosdigitais.com.br">
-  <meta property="og:type" content="page">
-  <meta property="og:title" content="Processing Community Day Brasil - 2021">
-  <meta property="og:image" content="https://pcd.encontrosdigitais.com.br/assets/PCD-BR-2021-Marca-Redes.png">
-  <meta property="og:description" content="O Processing Community Day é um evento realizado no mundo todo com o objetivo de promover a interação e celebrar a diversidade de pessoas e tecnologias no universo das artes computacionais.">
-  <meta property="og:site_name" content="Processing Community Day Brasil - 2021">
-
-
-  <!-- Social: Twitter -->
-
-  <meta name="twitter:card" content="summary_large_image"> <!-- aqui fica o tipo de card -->
-  <meta name="twitter:title" content="Processing Community Day Brasil - 2021">
-  <meta name="twitter:description" content="O Processing Community Day é um evento realizado no mundo todo com o objetivo de promover a interação e celebrar a diversidade de pessoas e tecnologias no universo das artes computacionais.">
-  <meta property="twitter:image:src" content="https://pcd.encontrosdigitais.com.br/assets/PCD-BR-2021-Marca-Redes.png">
-  
-
-  <!-- Favicons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="https://pcd2021.encontrosdigitais.com.br/assets/favicon/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="https://pcd2021.encontrosdigitais.com.br/assets/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="https://pcd2021.encontrosdigitais.com.br/assets/favicon/favicon-16x16.png">
-  <link rel="manifest" href="https://pcd2021.encontrosdigitais.com.br/assest/favicon/site.webmanifest">
-  <link rel="mask-icon" href="https://pcd2021.encontrosdigitais.com.br/assets/favicon/safari-pinned-tab.svg" color="#ff686c">
-  <link rel="shortcut icon" href="https://pcd2021.encontrosdigitais.com.br/assets/favicon/favicon.ico">
-  <meta name="msapplication-TileColor" content="#da532c">
-  <meta name="msapplication-config" content="https://pcd2021.encontrosdigitais.com.br/assets/favicon/browserconfig.xml">
-  <meta name="theme-color" content="#ffffff">
-
-
-
-
-</head>
-
-<body class="full">
-    <div class='formulario_certificado'>
-  <img src='https://pcd2021.encontrosdigitais.com.br/assets/PCD-BR-2021-Marca-Cinza.png' class='logoform'>
-  <br>
-  Consulta de certificados. Preencha o CPF apenas com números.
-  <br><br>
-  <form id='dadoscpf' method='GET' action='https://pcd2021.encontrosdigitais.com.br/certificados'>
-      <input type='number' name='cpf'/>
-      <input type='submit' value='Consulta por CPF' />
-  </form>
-</div>
-<script>
-  var formEl = document.querySelector('.formulario_certificado');
-  var url = new URL(window.location.href);
-  var cpf = url.searchParams.get("cpf");
-  if(cpf){
-      var url = "https://api.allorigins.win/get?url=" + encodeURI("https://www.ranoya.com/public/PCD/certificados.php?cpf=" + cpf);
-      
-      httpGetAsync(url, onLoad);
-      
-      function onLoad(response){
-          var obj = JSON.parse(response);
-          var el = document.createElement('html');
-          el.innerHTML = obj.contents;
-          var body = el.querySelector('body');
-          var head = el.querySelector('head');
-          document.head.innerHTML = head.innerHTML;
-          document.body.innerHTML = body.innerHTML;
+  <head>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        color: #ffffff;
+        -webkit-print-color-adjust: exact !important;
+        color-adjust: exact !important;
+        print-color-adjust: exact !important;
       }
-      
-      function httpGetAsync(theUrl, callback)
-      {
-          var xmlHttp = new XMLHttpRequest();
-          xmlHttp.onreadystatechange = function() { 
-              if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-                  callback(xmlHttp.responseText);
+
+      .formulariowrap {
+        color: #ff666c;
+        width: 100vw;
+        margin-top: 20vh;
+        text-align: center;
+      }
+
+      input {
+        width: 200px;
+        height: 18px;
+        border: #ff666c 1px solid;
+        font-size: 16px;
+        line-height: 18px;
+        font-family: Helvetica, Arial, sans-serif;
+        margin-right: 10px;
+        color: #ff666c;
+        padding: 7px;
+      }
+
+      .formulariowrap a {
+        width: 70px;
+        height: 18px;
+        font-size: 16px;
+        line-height: 18px;
+        font-family: Helvetica, Arial, sans-serif;
+        background-color: #ff666c;
+        color: white;
+        padding: 7px;
+        text-decoration: none;
+      }
+
+      .logoform {
+        width: 200px;
+        background-color: #ff666c;
+        padding: 20px;
+      }
+
+      .formulariowrap a:hover {
+        background-color: grey;
+      }
+
+      .certificadowrap {
+        width: 80vw;
+        height: 45vw;
+        padding: 5vw;
+        padding-top: 0;
+        display: inline-block;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center center;
+      }
+
+      .tudo {
+        padding: 5vw;
+        width: 90vw;
+        display: inline-block;
+        height: 40vw;
+        margin-bottom: 30px;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+      }
+
+      .textonormal {
+        clear: both;
+        font-size: 2.5vw;
+        line-height: 3vw;
+        padding-top: 16.7vw;
+      }
+
+      .numerocpf,
+      .periodo {
+        font-size: 2vw;
+      }
+
+      .tipodeatividade {
+        font-weight: bolder;
+        text-decoration: underline;
+      }
+
+      .nome,
+      .projeto {
+        font-weight: bolder;
+      }
+
+      .grafismo {
+        float: left;
+        width: 30vw;
+        height: 7.5vw;
+        overflow: hidden;
+        margin-left: 0;
+        margin-top: 0;
+      }
+
+      .assinatura {
+        font-size: 1.5vw;
+        text-align: center;
+        width: 40%;
+        margin-left: 23vw;
+        margin-top: 1.5vw;
+        display: inline-block;
+      }
+
+      .qrs {
+        float: left;
+        height: 8vw;
+        margin-left: -3vw;
+        display: none;
+      }
+
+      .qrs svg {
+        width: 8vw;
+        height: 8vw;
+      }
+
+      .linha {
+        width: 32vw;
+        height: 2px;
+        background-color: white;
+        display: inline-block;
+      }
+
+      .logoufpe {
+        margin-top: 3vw;
+        width: 8vw;
+        float: left;
+        clear: left;
+      }
+
+      .guilherme {
+        width: 15vw;
+        position: relative;
+        top: -7.3vw;
+        margin-bottom: -10vw;
+      }
+
+      .logoprojetao {
+        float: right;
+        margin-top: 2vw;
+        width: 15vw;
+      }
+
+      .logopath {
+        fill: #ffffff;
+      }
+
+      .fundo {
+        fill: transparent;
+      }
+
+      .vermelhoufpe {
+        fill: #e9a5b8;
+      }
+
+      .comprova {
+        text-align: right;
+        width: 40vw;
+        float: right;
+        margin-top: 2.5vw;
+        font-size: 1vw;
+        line-height: 1.2vw;
+      }
+
+      .inverte {
+        stroke: white;
+      }
+
+      .guilherme .inverte {
+        stroke: transparent;
+        fill: white;
+      }
+
+      .invertehalf {
+        fill: white;
+        fill-opacity: 0.5;
+      }
+    </style>
+
+    <script src="https://www.ranoya.com/Assets/JSLibs/QRCodeSVG/qrcode.min.js"></script>
+    <script src="https://www.ranoya.com/Assets/JSLibs/DataT/basics.js"></script>
+  </head>
+
+  <body>
+    <script>
+      $_GET = [];
+      (function () {
+        let corte = window.location.href.toString().indexOf("?");
+        if (corte > 0) {
+          let argumento = window.location.href.toString().substring(corte + 1);
+          argumentos = argumento.split("&");
+          for (arg in argumentos) {
+            let argCorte = argumentos[arg].indexOf("=");
+            $_GET[argumentos[arg].substring(0, argCorte)] = argumentos[
+              arg
+            ].substring(argCorte + 1);
           }
-          xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-          xmlHttp.send(null);
-      }
-  }else{
-      formEl.style.display = "block";
-  }
-</script>
-</body>
+        }
+      })();
+
+      let timestamp = "";
+      let docs = "";
+      let lista = [];
+      let contalista = 0;
+      const geracertificados = function (dados) {
+        for (let i = 0; i < dados.length; i++) {
+          if ($_GET["cpf"] == dados[i].CPF || $_GET["reg"] == dados[i].CPF) {
+            lista[contalista] = dados[i];
+            contalista++;
+          }
+        }
+
+        for (let k = 0; k < lista.length; k++) {
+          timestamp = new Date().getTime();
+          docs += `<div class='tudo'><div class='certificadowrap' style='background-image: url("https://www.ranoya.com/public/PCD/${lista[k].Evento}.svg");'>`;
+          docs += `<p class='textonormal'>Certificamos que <span class='nome'>${lista[k].Nome}</span>, portador(a) do CPF número <span class='numerocpf'>${lista[k].CPF}</span> <span class='numerocpf'>${lista[k].Tipo}</span> <span class='tipodeatividade'>${lista[k]["Título"]}</span>, <span class='periodo'>${lista[k]["Período"]}</span>, com duração de <span class='duracao'>${lista[k]["Duração"]}</span>, no <span class='projeto'>${lista[k].NomeEvento}</span>.</p>`;
+
+          docs += `<p class='comprova'>Este documento foi gerado digitalmente direto do website do Processing Community Day Brasil, no timestamp ${timestamp}, e pode ser verificado/validado em qualquer momento na url: <a href='https://pcd.encontrosdigitais.com.br/certificados/?reg=${lista[k].CPF}'>https://pcd.encontrosdigitais.com.br/certificados/?reg=${lista[k].CPF}</a></p>`;
+
+          docs += `</div></div>`;
+        }
+        document.getElementById("full").innerHTML = docs;
+      };
+
+      getdata(
+        googlesheet(
+          "https://docs.google.com/spreadsheets/d/1_1hwY6dUH8bfqNJsCgETMNjRX4jG_ZflReotq6BYGQY/edit#gid=0",
+          "Dados"
+        ),
+        geracertificados
+      );
+    </script>
+
+    <div id="full"></div>
+  </body>
 </html>

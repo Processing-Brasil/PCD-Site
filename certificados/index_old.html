@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Processing Community Day Brasil - 2021</title>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@900&family=Recursive:wght@400;700&family=Tomorrow:wght@500&display=swap" rel="stylesheet"> 
+
+  <link rel="stylesheet" href="https://pcd2021.encontrosdigitais.com.br/css/normalize.css">
+  <link rel="stylesheet" href="https://pcd2021.encontrosdigitais.com.br/css/main.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
+  <!-- <script src="js/sketch.js"></script> -->
+
+  <!-- Social: Facebook / Open Graph -->
+  
+  <meta property="og:url" content="https://pcd.encontrosdigitais.com.br">
+  <meta property="og:type" content="page">
+  <meta property="og:title" content="Processing Community Day Brasil - 2021">
+  <meta property="og:image" content="https://pcd.encontrosdigitais.com.br/assets/PCD-BR-2021-Marca-Redes.png">
+  <meta property="og:description" content="O Processing Community Day é um evento realizado no mundo todo com o objetivo de promover a interação e celebrar a diversidade de pessoas e tecnologias no universo das artes computacionais.">
+  <meta property="og:site_name" content="Processing Community Day Brasil - 2021">
+
+
+  <!-- Social: Twitter -->
+
+  <meta name="twitter:card" content="summary_large_image"> <!-- aqui fica o tipo de card -->
+  <meta name="twitter:title" content="Processing Community Day Brasil - 2021">
+  <meta name="twitter:description" content="O Processing Community Day é um evento realizado no mundo todo com o objetivo de promover a interação e celebrar a diversidade de pessoas e tecnologias no universo das artes computacionais.">
+  <meta property="twitter:image:src" content="https://pcd.encontrosdigitais.com.br/assets/PCD-BR-2021-Marca-Redes.png">
+  
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="https://pcd2021.encontrosdigitais.com.br/assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://pcd2021.encontrosdigitais.com.br/assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://pcd2021.encontrosdigitais.com.br/assets/favicon/favicon-16x16.png">
+  <link rel="manifest" href="https://pcd2021.encontrosdigitais.com.br/assest/favicon/site.webmanifest">
+  <link rel="mask-icon" href="https://pcd2021.encontrosdigitais.com.br/assets/favicon/safari-pinned-tab.svg" color="#ff686c">
+  <link rel="shortcut icon" href="https://pcd2021.encontrosdigitais.com.br/assets/favicon/favicon.ico">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-config" content="https://pcd2021.encontrosdigitais.com.br/assets/favicon/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+
+
+
+
+</head>
+
+<body class="full">
+    <div class='formulario_certificado'>
+  <img src='https://pcd2021.encontrosdigitais.com.br/assets/PCD-BR-2021-Marca-Cinza.png' class='logoform'>
+  <br>
+  Consulta de certificados. Preencha o CPF apenas com números.
+  <br><br>
+  <form id='dadoscpf' method='GET' action='https://pcd2021.encontrosdigitais.com.br/certificados'>
+      <input type='number' name='cpf'/>
+      <input type='submit' value='Consulta por CPF' />
+  </form>
+</div>
+<script>
+  var formEl = document.querySelector('.formulario_certificado');
+  var url = new URL(window.location.href);
+  var cpf = url.searchParams.get("cpf");
+  if(cpf){
+      var url = "https://api.allorigins.win/get?url=" + encodeURI("https://www.ranoya.com/public/PCD/certificados.php?cpf=" + cpf);
+      
+      httpGetAsync(url, onLoad);
+      
+      function onLoad(response){
+          var obj = JSON.parse(response);
+          var el = document.createElement('html');
+          el.innerHTML = obj.contents;
+          var body = el.querySelector('body');
+          var head = el.querySelector('head');
+          document.head.innerHTML = head.innerHTML;
+          document.body.innerHTML = body.innerHTML;
+      }
+      
+      function httpGetAsync(theUrl, callback)
+      {
+          var xmlHttp = new XMLHttpRequest();
+          xmlHttp.onreadystatechange = function() { 
+              if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                  callback(xmlHttp.responseText);
+          }
+          xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+          xmlHttp.send(null);
+      }
+  }else{
+      formEl.style.display = "block";
+  }
+</script>
+</body>
+</html>
