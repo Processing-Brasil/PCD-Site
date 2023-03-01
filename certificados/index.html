@@ -226,7 +226,7 @@
 
         for (let k = 0; k < lista.length; k++) {
           timestamp = new Date().getTime();
-          docs += `<div class='tudo'><div class='certificadowrap' style='background-image: url("https://www.ranoya.com/public/PCD/${lista[k].Evento}.svg");'>`;
+          docs += `<div class='tudo'><div class='certificadowrap' style='background-image: url("https://pcd.encontrosdigitais.com.br/certificados/${lista[k].Evento}.svg");'>`;
           docs += `<p class='textonormal'>Certificamos que <span class='nome'>${lista[k].Nome}</span>, portador(a) do CPF número <span class='numerocpf'>${lista[k].CPF}</span> <span class='numerocpf'>${lista[k].Tipo}</span> <span class='tipodeatividade'>${lista[k]["Título"]}</span>, <span class='periodo'>${lista[k]["Período"]}</span>, com duração de <span class='duracao'>${lista[k]["Duração"]}</span>, no <span class='projeto'>${lista[k].NomeEvento}</span>.</p>`;
 
           docs += `<p class='comprova'>Este documento foi gerado digitalmente direto do website do Processing Community Day Brasil, no timestamp ${timestamp}, e pode ser verificado/validado em qualquer momento na url: <a href='https://pcd.encontrosdigitais.com.br/certificados/?reg=${lista[k].CPF}'>https://pcd.encontrosdigitais.com.br/certificados/?reg=${lista[k].CPF}</a></p>`;
